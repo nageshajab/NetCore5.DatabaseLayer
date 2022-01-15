@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore5.DatabaseLayer", "NetCore5.DatabaseLayer\NetCore5.DatabaseLayer.csproj", "{FA8623FD-80A2-4333-9B45-DF7CE43BEFA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore5.DatabaseLayerTests", "NetCore5.DatabaseLayerTests\NetCore5.DatabaseLayerTests.csproj", "{1429A302-2FDE-4A1A-A1CE-792CB41D723D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA8623FD-80A2-4333-9B45-DF7CE43BEFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8623FD-80A2-4333-9B45-DF7CE43BEFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8623FD-80A2-4333-9B45-DF7CE43BEFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8623FD-80A2-4333-9B45-DF7CE43BEFA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1429A302-2FDE-4A1A-A1CE-792CB41D723D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1429A302-2FDE-4A1A-A1CE-792CB41D723D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1429A302-2FDE-4A1A-A1CE-792CB41D723D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1429A302-2FDE-4A1A-A1CE-792CB41D723D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29D5AFA5-95DD-4362-8EA7-87F7C75E12E2}
+	EndGlobalSection
+EndGlobal
