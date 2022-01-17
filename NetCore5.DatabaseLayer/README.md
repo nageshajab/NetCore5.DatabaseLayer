@@ -1,5 +1,8 @@
-﻿
-This package contains common methods to communicate with different databases. Right now it supports only SQL server. But future versions will contain support to Postgres, SqlLite, MySql, MongoDb, Elastic search.
+﻿github repository: https://github.com/nageshajab/NetCore5.DatabaseLayer
+
+Written in .Net core 5.
+
+This package contains common methods to communicate with different databases. 
 
 A developer does not need to know following things to interact with different databases. 
 a. different nuget packages for different database
@@ -10,3 +13,6 @@ All developer need to know is sql syntax for each database. This package will re
 Current functionalities supported:
 1. GetDataset(CommandText)
 2. ExecuteNonQuery(commandText)
+
+Right now it supports SQL server. 
+But future versions will contain support to SQLite, Postgres, MySql, MongoDb, Elastic search.
