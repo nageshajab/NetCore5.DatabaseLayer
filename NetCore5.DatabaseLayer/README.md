@@ -14,5 +14,5 @@ Current functionalities supported:
 1. GetDataset(CommandText)
 2. ExecuteNonQuery(commandText)
 
-Right now it supports SQL server. 
-But future versions will contain support to SQLite, Postgres, MySql, MongoDb, Elastic search.
+Right now it supports SQL server & SQLite. 
+But future versions will contain support to Postgres, MySql, MongoDb, Elastic search.

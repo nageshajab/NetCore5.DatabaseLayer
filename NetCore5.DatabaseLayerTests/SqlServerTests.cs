@@ -40,8 +40,6 @@ namespace NetCore5.DatabaseLayer.Tests
             DataSet ds = testDatabase.GetDataset("select * from a");
 
             result = testDatabase.ExecuteNonQuery("drop table a");
-            testDatabase.CloseConnection();
-
             Assert.IsTrue(ds.Tables.Count > 0);
             Assert.IsTrue(ds.Tables[0].Rows.Count > 0);
 

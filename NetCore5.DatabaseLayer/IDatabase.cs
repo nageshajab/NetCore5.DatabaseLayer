@@ -12,6 +12,5 @@ namespace NetCore5.DatabaseLayer
         public string ConnectionString { get; set; }
         public DataSet GetDataset(string CommandText);
         public int ExecuteNonQuery(string CommandText);
-        public void CloseConnection();
     }
 }

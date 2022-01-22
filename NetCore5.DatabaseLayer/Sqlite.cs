@@ -1,92 +1,91 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace NetCore5.DatabaseLayer
 {
+    /// <summary>
+    /// Contains common methods which developer frequently needs while communicating with Sql Server database
+    /// </summary>
     public class Sqlite : IDatabase
     {
+        private readonly SqliteConnection sqlConnection;
+        private ILogger _logger;
         public string ConnectionString { get; set; }
-        public ILogger logger;
-//        private readonly SqliteConnection sqliteConnection;
 
-        public Sqlite(string _ConnectionString, ILogger _logger)
+        public Sqlite(string _ConnectionString, ILogger logger)
         {
             ConnectionString = _ConnectionString;
-            logger = _logger;
-  //          sqliteConnection = new SqliteConnection(ConnectionString);
+            sqlConnection = (SqliteConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.Sqlite);
+            _logger = logger;
         }
 
-        private void OpenConnection()
+
+        /// <summary>
+        /// Returns dataset from command text
+        /// </summary>
+        /// <param name="ConnectionString"></param>
+        /// <param name="CommandText"></param>
+        /// <returns></returns>
+        public DataSet GetDataset(string CommandText)
         {
-            //if (sqliteConnection.State != ConnectionState.Open)
-            //{
-            //    sqliteConnection.ConnectionString = ConnectionString;
-            //    sqliteConnection.Open();
-            //}
+            DataSet dataSet;
+            try
+            {
+                ConnectionHelper.OpenConnection(sqlConnection);
+
+                dataSet = new();
+                DataTable dt = new DataTable();
+
+                using SqliteCommand command = new();
+                command.Connection = sqlConnection;
+                command.CommandText = CommandText;
+                SqliteDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
+                dataSet.Tables.Add(dt);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                throw;
+            }
+            finally
+            {
+                ConnectionHelper.CloseConnection(sqlConnection);
+            }
+
+            return dataSet;
         }
 
-        public void CloseConnection()
-        {
-            //if (sqliteConnection.State == ConnectionState.Open)
-            //    sqliteConnection.Close();
-
-            //sqliteConnection.Dispose();
-        }
-
+        /// <summary>
+        /// Use this method for insert, update, delete operation
+        /// </summary>
+        /// <param name="CommandText"></param>
+        /// <returns>number of rows affected</returns>
         public int ExecuteNonQuery(string CommandText)
         {
             try
             {
-                OpenConnection();
+                ConnectionHelper.OpenConnection(sqlConnection);
 
-                //using SqliteCommand command = sqliteConnection.CreateCommand();
-                //command.CommandText = CommandText;
-                //int result = command.ExecuteNonQuery();
-                return 0;// result;
+                using SqliteCommand command = new();
+                command.Connection = sqlConnection;
+                command.CommandText = CommandText;
+                int result = command.ExecuteNonQuery();
+                return result;
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                _logger.Error(ex);
                 throw;
             }
             finally
             {
-                CloseConnection();
+                ConnectionHelper.CloseConnection(sqlConnection);
             }
-        }
-
-        public DataSet GetDataset(string CommandText)
-        {
-            DataSet dataSet = new();
-            DataTable dt = new();
-            try
-            {
-                //sqliteConnection.Open();
-                //SqliteCommand command = sqliteConnection.CreateCommand();
-                //command.CommandText = CommandText;
-
-                //using (var reader = command.ExecuteReader())
-                //{
-                //    dt.Load(reader);
-                //}
-                //dataSet.Tables.Add(dt);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-                throw;
-            }
-            finally
-            {
-                CloseConnection();
-            }
-            return dataSet;
         }
     }
 }

@@ -18,24 +18,8 @@ namespace NetCore5.DatabaseLayer
         public SqlServer(string _ConnectionString, ILogger logger)
         {
             ConnectionString = _ConnectionString;
-            sqlConnection = new(ConnectionString);
+            sqlConnection = (SqlConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.SqlServer);
             _logger = logger;
-        }
-
-        private void OpenConnection()
-        {
-            if (sqlConnection.State != ConnectionState.Open) {
-                sqlConnection.ConnectionString = ConnectionString;
-                sqlConnection.Open();
-            }
-        }
-
-        public void CloseConnection()
-        {
-            if (sqlConnection.State == ConnectionState.Open)
-                sqlConnection.Close();
-
-            sqlConnection.Dispose();
         }
 
         /// <summary>
@@ -49,7 +33,7 @@ namespace NetCore5.DatabaseLayer
             DataSet dataSet;
             try
             {
-                OpenConnection();
+                ConnectionHelper.OpenConnection(sqlConnection);
 
                 SqlDataAdapter sqlDataAdapter = new();
                 dataSet = new();
@@ -67,7 +51,7 @@ namespace NetCore5.DatabaseLayer
             }
             finally
             {
-                CloseConnection();
+                ConnectionHelper.CloseConnection(sqlConnection);
             }
 
             return dataSet;
@@ -82,7 +66,7 @@ namespace NetCore5.DatabaseLayer
         {
             try
             {
-                OpenConnection();
+                ConnectionHelper.OpenConnection(sqlConnection);
 
                 using SqlCommand command = new();
                 command.Connection = sqlConnection;
@@ -97,7 +81,7 @@ namespace NetCore5.DatabaseLayer
             }
             finally
             {
-                CloseConnection();
+                ConnectionHelper.CloseConnection(sqlConnection);
             }
         }
     }
