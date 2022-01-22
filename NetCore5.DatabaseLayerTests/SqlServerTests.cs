@@ -9,14 +9,15 @@ using NLog;
 using NLog.Web;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using Microsoft.Extensions.Logging;
 
 namespace NetCore5.DatabaseLayer.Tests
 {
     [TestClass()]
     public class SqlServerTests
     {
-        NLog.Logger logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-
+        static ILoggerFactory _loggerFactory = (ILoggerFactory)new LoggerFactory();
+        ILogger<SqliteTests> logger = _loggerFactory.CreateLogger<SqliteTests>();
 
         [TestMethod()]
         public void GetDatasetTest()

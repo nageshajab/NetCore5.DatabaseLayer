@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using NLog;
+using Microsoft.Extensions.Logging;
+
 namespace NetCore5.DatabaseLayer
 {
     /// <summary>
@@ -12,10 +14,10 @@ namespace NetCore5.DatabaseLayer
     public class SqlServer : IDatabase
     {
         private readonly SqlConnection sqlConnection;
-        private ILogger _logger;
+        private Microsoft.Extensions.Logging.ILogger _logger;
         public string ConnectionString { get; set; }
 
-        public SqlServer(string _ConnectionString, ILogger logger)
+        public SqlServer(string _ConnectionString, Microsoft.Extensions.Logging.ILogger logger)
         {
             ConnectionString = _ConnectionString;
             sqlConnection = (SqlConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.SqlServer);
@@ -46,7 +48,7 @@ namespace NetCore5.DatabaseLayer
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -76,7 +78,7 @@ namespace NetCore5.DatabaseLayer
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally

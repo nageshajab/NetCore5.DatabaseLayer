@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using Microsoft.Data.Sqlite;
 using NLog;
+using Microsoft.Extensions.Logging;
 
 namespace NetCore5.DatabaseLayer
 {
@@ -13,10 +14,10 @@ namespace NetCore5.DatabaseLayer
     public class Sqlite : IDatabase
     {
         private readonly SqliteConnection sqlConnection;
-        private ILogger _logger;
+        private Microsoft.Extensions.Logging.ILogger _logger;
         public string ConnectionString { get; set; }
 
-        public Sqlite(string _ConnectionString, ILogger logger)
+        public Sqlite(string _ConnectionString, Microsoft.Extensions.Logging.ILogger logger)
         {
             ConnectionString = _ConnectionString;
             sqlConnection = (SqliteConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.Sqlite);
@@ -49,7 +50,7 @@ namespace NetCore5.DatabaseLayer
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -79,7 +80,7 @@ namespace NetCore5.DatabaseLayer
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
