@@ -38,9 +38,7 @@ namespace NetCore5.DatabaseLayer
         public static void CloseConnection(DbConnection dbConnection)
         {
             if (dbConnection.State == System.Data.ConnectionState.Open)
-                dbConnection.Close();
-
-            dbConnection.Dispose();
+                dbConnection.Close();          
         }
     }
 }

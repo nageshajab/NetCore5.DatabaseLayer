@@ -34,11 +34,11 @@ namespace NetCore5.DatabaseLayer.Tests
             //switch database to test
             connString = configuration.GetConnectionString("testconnection");
             IDatabase testDatabase = new SqlServer(connString, logger);
+
             result = testDatabase.ExecuteNonQuery(createTableScript);
             result = testDatabase.ExecuteNonQuery("delete a");
             result = testDatabase.ExecuteNonQuery("insert into a(b) values(1),(2),(3)");
             DataSet ds = testDatabase.GetDataset("select * from a");
-
             result = testDatabase.ExecuteNonQuery("drop table a");
             Assert.IsTrue(ds.Tables.Count > 0);
             Assert.IsTrue(ds.Tables[0].Rows.Count > 0);
