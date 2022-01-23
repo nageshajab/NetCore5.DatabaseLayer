@@ -86,5 +86,27 @@ namespace NetCore5.DatabaseLayer
                 ConnectionHelper.CloseConnection(sqlConnection);
             }
         }
+
+        public object ExecuteScalar(string commandText)
+        {
+            try
+            {
+                ConnectionHelper.OpenConnection(sqlConnection);
+
+                using SqlCommand command = new();
+                command.Connection = sqlConnection;
+                command.CommandText = commandText;
+                return command.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message + ex.InnerException?.Message);
+                throw;
+            }
+            finally
+            {
+                ConnectionHelper.CloseConnection(sqlConnection);
+            }
+        }
     }
 }
