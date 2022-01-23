@@ -13,6 +13,7 @@ All developer need to know is sql syntax for each database. This package will re
 Current functionalities supported:
 1. GetDataset(CommandText)
 2. ExecuteNonQuery(commandText)
+3. ExecuteScalar(commandText) - return single object value
 
 Right now it supports SQL server & SQLite. 
 But future versions will contain support to Postgres, MySql, MongoDb, Elastic search.
