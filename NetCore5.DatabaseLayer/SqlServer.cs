@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using NLog;
 using Microsoft.Extensions.Logging;
 
 namespace NetCore5.DatabaseLayer
