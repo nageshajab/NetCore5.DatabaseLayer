@@ -13,14 +13,12 @@ namespace NetCore5.DatabaseLayer
     public class SqlServer : IDatabase
     {
         private readonly SqlConnection sqlConnection;
-        private Microsoft.Extensions.Logging.ILogger _logger;
         public string ConnectionString { get; set; }
 
-        public SqlServer(string _ConnectionString, Microsoft.Extensions.Logging.ILogger logger)
+        public SqlServer(string _ConnectionString)
         {
             ConnectionString = _ConnectionString;
             sqlConnection = (SqlConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.SqlServer);
-            _logger = logger;
         }
 
         /// <summary>
@@ -45,9 +43,8 @@ namespace NetCore5.DatabaseLayer
 
                 sqlDataAdapter.Fill(dataSet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -75,9 +72,8 @@ namespace NetCore5.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -97,9 +93,8 @@ namespace NetCore5.DatabaseLayer
                 command.CommandText = commandText;
                 return command.ExecuteScalar();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally

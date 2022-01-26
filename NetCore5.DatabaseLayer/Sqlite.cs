@@ -13,14 +13,12 @@ namespace NetCore5.DatabaseLayer
     public class Sqlite : IDatabase
     {
         private readonly SqliteConnection sqlConnection;
-        private Microsoft.Extensions.Logging.ILogger _logger;
         public string ConnectionString { get; set; }
 
-        public Sqlite(string _ConnectionString, Microsoft.Extensions.Logging.ILogger logger)
+        public Sqlite(string _ConnectionString)
         {
             ConnectionString = _ConnectionString;
             sqlConnection = (SqliteConnection)ConnectionHelper.GetDbConnection(_ConnectionString, DbConnectionType.Sqlite);
-            _logger = logger;
         }
 
 
@@ -47,9 +45,8 @@ namespace NetCore5.DatabaseLayer
                 dt.Load(reader);
                 dataSet.Tables.Add(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -77,9 +74,8 @@ namespace NetCore5.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally
@@ -99,9 +95,8 @@ namespace NetCore5.DatabaseLayer
                 command.CommandText = commandText;
                 return command.ExecuteScalar();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex.Message + ex.InnerException?.Message);
                 throw;
             }
             finally

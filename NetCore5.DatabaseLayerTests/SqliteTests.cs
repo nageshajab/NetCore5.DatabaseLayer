@@ -9,7 +9,6 @@ namespace NetCore5.DatabaseLayer.Tests
     public class SqliteTests
     {
         static ILoggerFactory _loggerFactory = (ILoggerFactory)new LoggerFactory();
-        static ILogger<SqliteTests> logger = _loggerFactory.CreateLogger<SqliteTests>();
         static int result;
         static IDatabase Database;
 
@@ -20,7 +19,7 @@ namespace NetCore5.DatabaseLayer.Tests
 
             //use database master
             string connString = configuration.GetConnectionString("sqLiteConnection");
-            Database = new Sqlite(connString, logger);
+            Database = new Sqlite(connString);
         }
 
         [TestMethod]

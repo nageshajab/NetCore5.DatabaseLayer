@@ -8,8 +8,6 @@ namespace NetCore5.DatabaseLayer.Tests
     [TestClass()]
     public class SqlServerTests
     {
-        static ILoggerFactory _loggerFactory = (ILoggerFactory)new LoggerFactory();
-        static ILogger<SqliteTests> logger = _loggerFactory.CreateLogger<SqliteTests>();
         static IDatabase testDatabase;
         static int result;
 
@@ -23,12 +21,12 @@ namespace NetCore5.DatabaseLayer.Tests
 
             //use database master
             string connString = configuration.GetConnectionString("DefaultConnection");
-            IDatabase masterDatabase = new SqlServer(connString, logger);
+            IDatabase masterDatabase = new SqlServer(connString);
             result = masterDatabase.ExecuteNonQuery(createDbScript);
 
             //switch database to test
             connString = configuration.GetConnectionString("testconnection");
-            testDatabase = new SqlServer(connString, logger);
+            testDatabase = new SqlServer(connString);
             result = testDatabase.ExecuteNonQuery(createTableScript);
         }
 
